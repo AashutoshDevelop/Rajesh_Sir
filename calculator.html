@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar Savings Calculator | Greeja Organic Solar Energy</title>
+  <meta name="description" content="Calculate your solar savings, recommended solar system size (kW), PM Surya Ghar subsidy amounts, and investment payback period in Bihar.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav class="navbar">
+        <a href="index.html" class="logo-area">
+          <svg class="logo-img" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="44" fill="#ECFDF5" stroke="#10B981" stroke-width="4"/>
+            <circle cx="50" cy="50" r="26" fill="#FBBF24"/>
+          </svg>
+          <div class="logo-text">
+            <span class="logo-title">GREEJA <span>SOLAR</span></span>
+            <span class="logo-subtitle" data-i18n="brand_partner">Authorized UTL Solar Partner</span>
+          </div>
+        </a>
+        
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="index.html" data-i18n="nav_home">Home</a></li>
+          <li class="nav-item"><a href="why-solar.html" data-i18n="nav_why_solar">Why Solar?</a></li>
+          <li class="nav-item"><a href="services.html" data-i18n="nav_services">Services</a></li>
+          <li class="nav-item active"><a href="calculator.html" data-i18n="nav_calculator">Calculator</a></li>
+          <li class="nav-item"><a href="products.html" data-i18n="nav_products">Products</a></li>
+          <li class="nav-item"><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+          <li class="nav-item"><a href="about.html" data-i18n="nav_about">About Us</a></li>
+          <li class="nav-item"><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <div class="lang-selector">
+            <span class="lang-btn active" data-lang="en">EN</span>
+            <span class="lang-btn" data-lang="hi">हिं</span>
+          </div>
+          <a href="contact.html" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.88rem;" data-i18n="btn_free_consultation">Book Site Visit</a>
+          <button class="mobile-menu-toggle"><i class="fas fa-bars"></i></button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <section style="background: radial-gradient(circle at 85% 15%, #FEF3C7 0%, #ECFDF5 40%, var(--bg-page) 80%); padding-top: 130px; padding-bottom: 60px; border-bottom: 1px solid var(--border-subtle);">
+    <div class="container">
+      <span class="badge-pill badge-emerald" style="margin-bottom: 12px;">INSTANT FINANCIAL ESTIMATOR</span>
+      <h1 data-i18n="calc_title" style="font-size: 3rem; margin-bottom: 16px;">Solar ROI & Subsidy Calculator</h1>
+      <p data-i18n="calc_subtitle" style="font-size: 1.2rem; color: var(--text-secondary); max-width: 720px;">Compute your exact system capacity, monthly electricity bill reduction, and government subsidy eligibility in under 30 seconds.</p>
+    </div>
+  </section>
+
+  <!-- Main Calculator Widget -->
+  <section style="background: var(--bg-page); padding: 60px 0;">
+    <div class="container">
+      <div class="calculator-container">
+        
+        <!-- Input Panel -->
+        <div class="calc-input-panel">
+          <!-- Input Mode Toggle -->
+          <div style="display: flex; gap: 8px; margin-bottom: 28px; background: var(--bg-alt); padding: 4px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+            <button id="toggle-bill-input" class="btn btn-sm active" style="flex: 1; padding: 10px; font-size: 0.85rem; border-radius: 6px; background: white; box-shadow: var(--shadow-sm); cursor: pointer;" data-i18n="calc_bill_label">Average Monthly Electricity Bill (₹)</button>
+            <button id="toggle-units-input" class="btn btn-sm" style="flex: 1; padding: 10px; font-size: 0.85rem; border-radius: 6px; background: transparent; cursor: pointer;" data-i18n="calc_units_label">Monthly Consumption (Units)</button>
+          </div>
+
+          <!-- Bill Input Wrapper -->
+          <div id="bill-input-wrapper" class="form-group">
+            <label for="calc-bill" data-i18n="calc_bill_label">Average Monthly Electricity Bill (₹)</label>
+            <div class="form-input-wrapper">
+              <span class="input-icon">₹</span>
+              <input type="number" id="calc-bill" class="form-input" value="3000" min="500" max="50000" step="100">
+            </div>
+            <input type="range" id="calc-bill-slider" class="range-slider" min="500" max="50000" step="100" value="3000">
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; font-weight: 600;">
+              <span>₹500</span>
+              <span>₹50,000+</span>
+            </div>
+          </div>
+
+          <!-- Units Input Wrapper (Initially hidden) -->
+          <div id="units-input-wrapper" class="form-group" style="display: none;">
+            <label for="calc-units" data-i18n="calc_units_label">Average Monthly Consumption (Units/kWh)</label>
+            <div class="form-input-wrapper">
+              <span class="input-icon"><i class="fas fa-bolt"></i></span>
+              <input type="number" id="calc-units" class="form-input" value="400" min="50" max="6000" step="10">
+            </div>
+            <input type="range" id="calc-units-slider" class="range-slider" min="50" max="6000" step="10" value="400">
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; font-weight: 600;">
+              <span>50 Units</span>
+              <span>6,000+ Units</span>
+            </div>
+          </div>
+
+          <!-- Property Type Selector -->
+          <div class="form-group">
+            <label data-i18n="calc_property_label">Property Type</label>
+            <div class="card-selector-grid property-selector-grid">
+              <div class="selector-card active" data-value="home">
+                <i class="fas fa-home"></i>
+                <span data-i18n="calc_property_home">Home / Residential</span>
+              </div>
+              <div class="selector-card" data-value="commercial">
+                <i class="fas fa-store"></i>
+                <span data-i18n="calc_property_commercial">Commercial / Office</span>
+              </div>
+              <div class="selector-card" data-value="farm">
+                <i class="fas fa-tractor"></i>
+                <span data-i18n="calc_property_farm">Farm / Agricultural</span>
+              </div>
+              <div class="selector-card" data-value="factory">
+                <i class="fas fa-industry"></i>
+                <span data-i18n="calc_property_factory">Factory / Industrial</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Roof Type Selector -->
+          <div class="form-group" style="margin-bottom: 0;">
+            <label data-i18n="calc_roof_label">Roof Structure</label>
+            <div class="card-selector-grid roof-selector-grid">
+              <div class="selector-card active" data-value="concrete">
+                <i class="fas fa-building"></i>
+                <span data-i18n="calc_roof_concrete">RCC Concrete Flat Roof</span>
+              </div>
+              <div class="selector-card" data-value="tin">
+                <i class="fas fa-layer-group"></i>
+                <span data-i18n="calc_roof_tin">Tin / Industrial Metal Sheet</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="calc-results-panel">
+          <div>
+            <div style="text-align: center; margin-bottom: 16px;">
+              <span class="badge-pill badge-amber" style="font-size: 0.75rem;">ESTIMATED MONTHLY SAVINGS</span>
+            </div>
+
+            <!-- Big Savings Display Card -->
+            <div class="saving-hero">
+              <div class="saving-hero-label" data-i18n="calc_monthly_savings_label">You Will Save Up To</div>
+              <div id="savings-hero-value" class="saving-hero-val">₹2,700</div>
+              <div style="font-size: 0.85rem; color: var(--emerald-dark); font-weight: 700;">Every Month On Electricity</div>
+            </div>
+
+            <!-- Output Metric Cards -->
+            <div class="results-grid">
+              <div class="result-item">
+                <div class="result-label" data-i18n="calc_recommended_kw">Recommended Size</div>
+                <div id="out-kw" class="result-val">3 kW</div>
+              </div>
+              <div class="result-item">
+                <div class="result-label" data-i18n="calc_est_total_cost">Estimated System Cost</div>
+                <div id="out-total-cost" class="result-val">₹1,80,000</div>
+              </div>
+              <div class="result-item" style="border-left: 3px solid var(--amber-primary);">
+                <div class="result-label" data-i18n="calc_est_subsidy">PM Surya Ghar Subsidy</div>
+                <div id="out-subsidy" class="result-val" style="color: var(--amber-dark);">₹78,000</div>
+              </div>
+              <div class="result-item" style="border-left: 3px solid var(--emerald-primary);">
+                <div class="result-label" data-i18n="calc_net_investment">Net Investment Cost</div>
+                <div id="out-net-cost" class="result-val" style="color: var(--emerald-dark);">₹1,02,000</div>
+              </div>
+              <div class="result-item">
+                <div class="result-label" data-i18n="calc_payback_period">Investment Payback</div>
+                <div id="out-payback" class="result-val">3.1 Years</div>
+              </div>
+              <div class="result-item">
+                <div class="result-label" data-i18n="calc_25yr_savings">25-Year Lifetime Savings</div>
+                <div id="out-25yr-savings" class="result-val">₹8,10,000</div>
+              </div>
+            </div>
+
+            <!-- Environmental Impact Card -->
+            <div class="env-impact-card">
+              <div class="env-stat">
+                <div id="out-co2" class="env-stat-val">3,600 kg</div>
+                <div class="env-stat-label" data-i18n="calc_co2_offset">Annual CO2 Offset</div>
+              </div>
+              <div style="height: 36px; width: 1px; background: rgba(255,255,255,0.2);"></div>
+              <div class="env-stat">
+                <div id="out-trees" class="env-stat-val">160 Trees</div>
+                <div class="env-stat-label" data-i18n="calc_trees_equivalent">Equivalent Trees Planted</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center;">
+            <a href="contact.html" class="btn btn-secondary" style="width: 100%;" data-i18n="btn_claim_subsidy">Claim Your PM Surya Ghar Subsidy Now <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Multi-Action Floating Dock -->
+  <div class="floating-dock">
+    <a href="https://wa.me/917903406429" class="floating-btn floating-whatsapp" target="_blank" title="WhatsApp Us">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="tel:+917903406429" class="floating-btn floating-call" title="Call Us Direct">
+      <i class="fas fa-phone-alt"></i>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-logo">
+          <div class="logo-area" style="padding-bottom: 0;">
+            <svg class="logo-img" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="44" fill="#ECFDF5" stroke="#10B981" stroke-width="4"/>
+              <circle cx="50" cy="50" r="26" fill="#FBBF24"/>
+            </svg>
+            <span class="logo-title" style="color: white;">GREEJA <span>SOLAR</span></span>
+          </div>
+          <p data-i18n="footer_text">Greeja Organic Solar Energy Pvt. Ltd. is an authorized UTL Solar partner in North Bihar.</p>
+        </div>
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+            <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+            <li><a href="why-solar.html" data-i18n="nav_why_solar">Why Solar?</a></li>
+            <li><a href="calculator.html" data-i18n="nav_calculator">Calculator</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h3>Information</h3>
+          <ul>
+            <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+            <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+            <li><a href="subsidy.html" data-i18n="nav_subsidy">Subsidy Info</a></li>
+            <li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h3>Contact Info</h3>
+          <p style="font-size: 0.9rem; margin-bottom: 12px;"><i class="fas fa-map-marker-alt" style="color: var(--amber-light); margin-right: 8px;"></i> <span data-i18n="office_address">Gobarsahi, Muzaffarpur, Bihar - 842001</span></p>
+          <p style="font-size: 0.9rem; margin-bottom: 12px;"><i class="fas fa-phone-alt" style="color: var(--amber-light); margin-right: 8px;"></i> <span data-i18n="phone_number">+91 79034 06429</span></p>
+          <p style="font-size: 0.9rem;"><i class="fas fa-envelope" style="color: var(--amber-light); margin-right: 8px;"></i> <span data-i18n="email_address">info@greejasolar.com</span></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="copyright">© 2026 Greeja Organic Solar Energy Pvt. Ltd. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/translations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
